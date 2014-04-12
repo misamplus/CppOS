@@ -21,7 +21,7 @@ extern "C" {
 		terminal.printString("Compliled in: Ubuntu 13.10 i686\n\n");
 		terminal.setColor(2);
 		terminal.printString("Author: Misam Saki (misam.ir)\n");
-		terminal.printString("License: GNU General Public License v3 or later\n");
+		terminal.printString("License: GNU Lesser General Public License v3.0\n");
 		terminal.printString("Copyright (C) 2014  Misam Saki, misam.ir");
 	}
 }
