@@ -1,5 +1,5 @@
 /**
- * The terminal code
+ * The Vga code
  *
  * @package CppOS
  * @since CppOS 1.0
@@ -8,9 +8,9 @@
  * @author Misam Saki,  http://misam.ir/
  */
 
-#include "include/terminal.h"
+#include "include/vga.h"
 
-Terminal::Terminal() {
+Vga::Vga() {
 	max_row = 24;
 	max_column = 79;
 
@@ -21,17 +21,17 @@ Terminal::Terminal() {
 	for ( size_t r = 0; r < max_row; r++ ) {
 		for ( size_t c = 0; c < max_column; c++ ) {
 			const size_t index = r * max_column + c;
-			buffer[index] = makeVgaEntry(' ', color);
+			buffer[index] = makeEntry(' ', color);
 		}
 	}
 	setCursor(0, 0);
 }
 
-void Terminal::outb(unsigned short int port, char data) {
+void Vga::outb(unsigned short int port, char data) {
 	asm("outb %%al, %%dx;" : : "d"(port), "a"(data));
 }
 
-void Terminal::setCursor(unsigned short int r, unsigned short int c) {
+void Vga::setCursor(unsigned short int r, unsigned short int c) {
 	unsigned short int port = 0x3D4;
 	unsigned char data = 0x0E;
 	unsigned int position = r * (max_column + 1) + c;
@@ -47,17 +47,17 @@ void Terminal::setCursor(unsigned short int r, unsigned short int c) {
 	outb(port, data);
 }
 
-size_t Terminal::strlen(const char* str) {
+size_t Vga::strlen(const char* str) {
 	size_t ret = 0;
 	while (str[ret] != 0) ret++;
 	return ret;
 }
 
-uint8_t Terminal::makeColor(unsigned short int fg, unsigned short int bg) {
+uint8_t Vga::makeColor(unsigned short int fg, unsigned short int bg) {
 	return fg | bg << 4;
 }
 
-uint16_t Terminal::makeVgaEntry(char c, uint8_t color) {
+uint16_t Vga::makeEntry(char c, uint8_t color) {
 	uint16_t c16 = c;
 	uint16_t color16 = color;
 	return c16 | color16 << 8;
@@ -82,16 +82,16 @@ uint16_t Terminal::makeVgaEntry(char c, uint8_t color) {
  * White: 15
  */
 
-void Terminal::setColor(uint8_t colorx) {
+void Vga::setColor(uint8_t colorx) {
 	color = colorx;
 }
 
-void Terminal::putEntry(char ch, uint8_t color, size_t r, size_t c) {
+void Vga::putEntry(char ch, uint8_t color, size_t r, size_t c) {
 	const size_t index = r * (max_column + 1) + c;
-	buffer[index] = makeVgaEntry(ch, color);
+	buffer[index] = makeEntry(ch, color);
 }
 
-void Terminal::putChar(char c) {
+void Vga::putChar(char c) {
 	if (column > max_column) {
 		column = 0;
 		row++;
@@ -120,7 +120,7 @@ void Terminal::putChar(char c) {
 	setCursor(row, column);
 }
 
-void Terminal::printString(const char* data) {
+void Vga::printString(const char* data) {
 	size_t len = strlen(data);
 	for ( size_t i = 0; i < len; i++ ) putChar(data[i]);
 }

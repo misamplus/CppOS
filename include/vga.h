@@ -1,5 +1,5 @@
 /**
- * The terminal library
+ * The Vga library
  *
  * @package CppOS
  * @since CppOS 1.0
@@ -14,7 +14,7 @@
 #ifndef TERMINAL_H
 #define TERMINAL_H
  
-class Terminal {
+class Vga {
 private:
 	size_t max_row;
 	size_t max_column;
@@ -27,9 +27,9 @@ private:
 	void outb(unsigned short int, char);
 	size_t strlen(const char*);
 	uint8_t makeColor(unsigned short int, unsigned short int);
-	uint16_t makeVgaEntry(char, uint8_t);
+	uint16_t makeEntry(char, uint8_t);
 public:
-	Terminal();
+	Vga();
 	void setCursor(unsigned short int, unsigned short int);
 	void setColor(uint8_t);
 	void putEntry(char, uint8_t, size_t, size_t);
