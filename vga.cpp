@@ -8,7 +8,7 @@
  * @author Misam Saki,  http://misam.ir/
  */
 
-#include "../include/vga.h"
+#include "include/vga.h"
 
 Vga::Vga() {
 	max_row = 24;

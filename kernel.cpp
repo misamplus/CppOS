@@ -8,7 +8,7 @@
  * @author Misam Saki,  http://misam.ir/
  */
 
-#include "terminal.cpp"
+#include "module/terminal.cpp"
 
 extern "C" {
 	void kernel_main() {
